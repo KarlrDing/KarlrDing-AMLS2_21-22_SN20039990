@@ -4,7 +4,9 @@ import pandas as pd
 from datasets import Dataset
 
 #file path
-path_img = './img'
+path_sg1 = './Stage_I'
+path_sg2 = './Stage_II'
+path_img = '/img'
 path_dat = './dataset'
 path_fil = '/clean_extended_train.csv'
 #parameters
@@ -49,3 +51,73 @@ def data_stage2(raw_data):
 	print('Stage-II rating distribution is:\n')
 	print(mask_data['rating'].value_counts())
 	return mask_data
+#distribution plot of samples
+def dist_plot(mask_data,path_code=1):
+	if path_code == 1:
+		path = path_sg1
+		pass
+	elif path_code == 2:
+		path = path_sg2
+		pass
+
+	import matplotlib.pyplot as plt
+	import seaborn as sns
+	#configure figure size and font size
+	fig,ax = plt.subplots(figsize = (3.8,2.6))
+	plt.rcParams['font.size'] = 9.7
+	#set labels
+	ax.set_xlabel("Sentiment tendency")
+	ax.set_ylabel("Numbers of reviews")
+	#set ticks
+	ax.set_xticks([0,1])
+	ax.set_xticks([0,1])
+	ax.set_xticklabels(['Negative','Positive'])
+	#seaborn histplot
+	sns.histplot(mask_data['rating'], kde=True, ax = ax, linewidth = 1.6)
+	#save plot in two files : png and svg (vector)
+	plt.savefig(path+path_img+'/'+'distribution'+'.png')
+	plt.savefig(path+path_img+'/'+'distribution'+'.svg')
+	pass
+#form a smaller dataset
+def minor_dataset(mask_data):
+	#original ratio
+	data_0 = mask_data.loc[mask_data['rating'] == 0].head(2000)
+	data_1 = mask_data.loc[mask_data['rating'] == 1].head(18000)
+	minor_data_ori = pd.concat([data_0, data_1])
+	#balanced ratio
+	data_0 = mask_data.loc[mask_data['rating'] == 0].head(10000)
+	data_1 = mask_data.loc[mask_data['rating'] == 1].head(10000)
+	minor_data_bal = pd.concat([data_0, data_1])
+	return minor_data_ori,minor_data_bal
+#show distribution
+def dist_minor(minor_data,path_code = 1):
+	if path_code == 1:
+		path = path_sg1
+		name = 'ori'
+		pass
+	elif path_code == 2:
+		path = path_sg1
+		name = 'bal'
+		pass
+	elif path_code == 3:
+		path = path_sg2
+		name = 'ori'
+		pass
+	elif path_code == 4:
+		path = path_sg2
+		name = 'bal'
+		pass
+
+	distribution = minor_data['review'].str.len().astype(int)
+	print(distribution.describe().apply(lambda x: format(x, 'f')))
+	#boxplot
+	import matplotlib.pyplot as plt
+	import seaborn as sns
+	#configure figure size and font size
+	fig,ax = plt.subplots(figsize = (3.8,2.6))
+	plt.rcParams['font.size'] = 9.7
+	#seaborn boxplot
+	ax = sns.boxplot(distribution)
+	plt.savefig(path+path_img+'/'+'dist_box_'+name+'.png')
+	plt.savefig(path+path_img+'/'+'dist_box_'+name+'.svg')
+	pass
