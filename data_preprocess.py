@@ -79,7 +79,7 @@ def dist_plot(mask_data,path_code=1):
 	plt.savefig(path+path_img+'/'+'distribution'+'.svg')
 	pass
 #form a smaller dataset
-def minor_dataset(mask_data):
+def minor_dataset1(mask_data):
 	#original ratio
 	data_0 = mask_data.loc[mask_data['rating'] == 0].head(2000)
 	data_1 = mask_data.loc[mask_data['rating'] == 1].head(18000)
@@ -88,6 +88,22 @@ def minor_dataset(mask_data):
 	data_0 = mask_data.loc[mask_data['rating'] == 0].head(10000)
 	data_1 = mask_data.loc[mask_data['rating'] == 1].head(10000)
 	minor_data_bal = pd.concat([data_0, data_1])
+	return minor_data_ori,minor_data_bal
+def minor_dataset2(mask_data):
+	#original ratio
+	data_0 = mask_data.loc[mask_data['rating'] == 0].head(16400)
+	data_1 = mask_data.loc[mask_data['rating'] == 1].head(1600)
+	data_2 = mask_data.loc[mask_data['rating'] == 2].head(1000)
+	data_3 = mask_data.loc[mask_data['rating'] == 3].head(600)
+	data_4 = mask_data.loc[mask_data['rating'] == 4].head(400)
+	minor_data_ori = pd.concat([data_0, data_1, data_2, data_3, data_4])
+	#balanced ratio
+	data_0 = mask_data.loc[mask_data['rating'] == 0].head(4000)
+	data_1 = mask_data.loc[mask_data['rating'] == 1].head(4000)
+	data_2 = mask_data.loc[mask_data['rating'] == 2].head(4000)
+	data_3 = mask_data.loc[mask_data['rating'] == 3].head(4000)
+	data_4 = mask_data.loc[mask_data['rating'] == 4].head(4000)
+	minor_data_bal = pd.concat([data_0, data_1, data_2, data_3, data_4])
 	return minor_data_ori,minor_data_bal
 #show distribution
 def dist_minor(minor_data,path_code = 1):
