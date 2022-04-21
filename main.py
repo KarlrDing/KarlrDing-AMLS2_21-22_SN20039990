@@ -36,13 +36,13 @@ data_preprocess.dist_minor(bal_s2,4)
 #Stage-I model and trainning
 model_stage1.model_dataset_choose(0,ori_s1,bal_s1)
 model_stage1.model_dataset_choose(1,ori_s1,bal_s1)
+model_stage1.model_dataset_choose(2,ori_s1,bal_s1)
 model_stage1.model_dataset_choose(3,ori_s1,bal_s1)
-model_stage1.model_dataset_choose(4,ori_s1,bal_s1)
 # ======================================================================================================================
 # Stage-II
 # ======================================================================================================================
 #Stage-II model and trainning
 model_stage2.model_dataset_choose(0,ori_s2,bal_s2)
 model_stage2.model_dataset_choose(1,ori_s2,bal_s2)
+model_stage2.model_dataset_choose(2,ori_s2,bal_s2)
 model_stage2.model_dataset_choose(3,ori_s2,bal_s2)
-model_stage2.model_dataset_choose(4,ori_s2,bal_s2)
